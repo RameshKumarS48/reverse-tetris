@@ -1,0 +1,12 @@
+{
+  "pages": {
+    "buildCommand": "npm run build",
+    "outputDirectory": "dist",
+    "routes": [
+      {
+        "pattern": "/*",
+        "route": "dist/server/server.js"
+      }
+    ]
+  }
+}
