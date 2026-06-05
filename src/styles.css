@@ -1,0 +1,187 @@
+@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;600;700&family=Inter:wght@400;500;600;700&display=swap");
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 20px;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-ring: var(--ring);
+  --font-display: "IBM Plex Mono", monospace;
+  --font-sans: "Inter", system-ui, sans-serif;
+}
+
+:root {
+  --radius: 8px;
+  /* Retro-Modern Palette */
+  --background: #f5f3f0;
+  --foreground: #1a1a1a;
+  --card: #ffffff;
+  --card-foreground: #1a1a1a;
+  --primary: #2962ff;
+  --primary-foreground: #fff;
+  --secondary: #e91e63;
+  --secondary-foreground: #fff;
+  --muted: #999999;
+  --muted-foreground: #666666;
+  --accent: #ff6d00;
+  --accent-foreground: #fff;
+  --destructive: #c62828;
+  --destructive-foreground: #fff;
+  --border: #e0dedd;
+  --ring: #2962ff;
+  /* Classic Tetris Colors */
+  --tetro-i: #00bcd4;   /* cyan */
+  --tetro-o: #ffeb3b;   /* yellow */
+  --tetro-t: #9c27b0;   /* purple */
+  --tetro-s: #4caf50;   /* green */
+  --tetro-z: #f44336;   /* red */
+  --tetro-j: #2196f3;   /* blue */
+  --tetro-l: #ff9800;   /* orange */
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html, body {
+    font-family: var(--font-sans);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* ─── Card Styling ──────────────────────────────────── */
+.glass {
+  background: #ffffff;
+  border: 2px solid var(--border);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+/* ─── Animations ──────────────────────────────────── */
+
+@keyframes block-shake {
+  0%,100% { transform: translate(0, 0) rotate(0deg); }
+  15%     { transform: translate(-3px, 1px) rotate(-1deg); }
+  30%     { transform: translate(3px, -1px) rotate(1deg); }
+  45%     { transform: translate(-2px, 2px) rotate(0.5deg); }
+  60%     { transform: translate(2px, -2px) rotate(-0.5deg); }
+  75%     { transform: translate(-1px, 1px) rotate(0deg); }
+}
+
+@keyframes block-explode {
+  0%   { opacity: 1; transform: scale(1); }
+  50%  { opacity: 0.8; transform: scale(1.2); filter: brightness(2); }
+  100% { opacity: 0; transform: scale(0); }
+}
+
+@keyframes block-fall {
+  from { transform: translateY(var(--fall-from, 0px)); }
+  to   { transform: translateY(0); }
+}
+
+@keyframes board-cell-in {
+  from { opacity: 0; transform: scale(0.7); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes victory-pop {
+  0%  { opacity: 0; transform: scale(0.4) rotate(-5deg); }
+  60% { transform: scale(1.1) rotate(2deg); }
+  100%{ opacity: 1; transform: scale(1) rotate(0deg); }
+}
+
+@keyframes particle-burst {
+  from {
+    opacity: 1;
+    transform: translate(0, 0) scale(1);
+  }
+  to {
+    opacity: 0;
+    transform: translate(var(--tx, 0), var(--ty, 0)) scale(0);
+  }
+}
+
+@keyframes combo-bar-drain {
+  from { width: 100%; }
+  to   { width: 0%; }
+}
+
+@keyframes neon-glow {
+  0%, 100% { box-shadow: 0 0 8px currentColor, inset 0 1px 0 rgba(255,255,255,0.3); }
+  50%      { box-shadow: 0 0 16px currentColor, inset 0 1px 0 rgba(255,255,255,0.4); }
+}
+
+@keyframes grid-drift {
+  0%, 100% { background-position: 0 0; }
+  100%     { background-position: 40px 40px; }
+}
+
+.animate-block-shake {
+  animation: block-shake 350ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-block-explode {
+  animation: block-explode 250ms ease-out both;
+  pointer-events: none;
+}
+
+.animate-block-fall {
+  animation: block-fall 220ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.animate-board-cell-in {
+  animation: board-cell-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.animate-victory-pop {
+  animation: victory-pop 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+}
+
+.animate-particle-burst {
+  animation: particle-burst 400ms ease-out both;
+}
+
+.animate-combo-bar-drain {
+  animation: combo-bar-drain var(--combo-drain-duration, 3s) linear forwards;
+}
+
+.animate-neon-glow {
+  animation: neon-glow 2s ease-in-out infinite;
+}
+
+.animate-grid-drift {
+  animation: grid-drift 20s linear infinite;
+}
+
+/* ─── Utility Classes ──────────────────────────────────── */
+
+.neon-text {
+  color: var(--primary);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--tetro-i) 0%, var(--tetro-t) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
