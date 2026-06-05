@@ -45,11 +45,13 @@ export function Block({
         "hover:shadow-lg hover:-translate-y-0.5",
         isShaking && "animate-block-shake",
         isExploding && "animate-block-explode",
-        isHint && "animate-pulse ring-4 ring-yellow-300"
+        isHint && "animate-pulse ring-8 ring-yellow-200 scale-105"
       )}
       style={{
         backgroundColor: color,
-        boxShadow: `inset 1px 1px 0 rgba(255,255,255,0.5), inset -1px -1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.1)`,
+        boxShadow: isHint
+          ? `inset 1px 1px 0 rgba(255,255,255,0.5), inset -1px -1px 0 rgba(0,0,0,0.2), 0 0 20px rgba(255,255,0,0.8), 0 0 40px rgba(255,200,0,0.5)`
+          : `inset 1px 1px 0 rgba(255,255,255,0.5), inset -1px -1px 0 rgba(0,0,0,0.2), 0 2px 4px rgba(0,0,0,0.1)`,
         borderColor: `color-mix(in oklab, ${color} 80%, black)`,
         animationDelay,
       }}
